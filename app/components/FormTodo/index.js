@@ -1,23 +1,39 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import {StyleSheet, View, TextInput, TouchableOpacity, Text} from 'react-native';
 
-export default function FormTodo( props ) {
+export default class FormTodo extends React.Component {
 
-    return (
-        <View style={ styles.form }>
-            <TextInput style={ [ styles.input ] }
-            placeholder={'Что нужно сделать?'}/>
+    state = {
+        title: '',
+        disabled: true
+    };
 
-            <TouchableOpacity>
-                <Text>
-                    {'Добавить'.toUpperCase()}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    )
+    render() {
+        const {onAddTodo} = this.props;
+        let {title, disabled} = this.state;
+        return (
+            <View style={styles.form}>
+                <TextInput style={[styles.input]}
+                           placeholder={'Что нужно сделать?'}
+                           onChangeText={title => this.setState({title})}
+                           value={title}/>
+
+                <TouchableOpacity style={[styles.button, title.length > 0 ? '' : styles.disabled]}
+                                  disabled={title.length > 0 ? false : true}
+                                  onPress={() => {
+                                      onAddTodo(title);
+                                      this.setState({title: ''});
+                                  }}>
+                    <Text style={styles.buttonText}>
+                        {'Добавить'.toUpperCase()}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
     form: {
         flex: 1,
         position: 'absolute',
@@ -44,7 +60,15 @@ const styles = StyleSheet.create( {
         borderColor: 'lightgray',
         borderRadius: 2
     },
-    button : {
-        fontWeight: 'bold'
+    button: {
+        opacity: 1
+    },
+    buttonText: {
+        fontWeight: 'bold',
+    },
+    disabled: {
+        opacity: 0.5
     }
-} );
+});
+
+// onChangeText={(title) => this.setState({title})}
