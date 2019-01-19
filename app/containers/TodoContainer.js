@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-
-import { toggleTodo } from "../actions";
+import { editTodo, removeTodo, toggleTodo } from "../actions";
 import Todo from '../components/Todo';
 
 function mapDispatchToProps( dispatch ) {
     return {
-        onToggleTodo: id => dispatch( toggleTodo( id ) )
+        onToggleTodo: id => dispatch( toggleTodo( id ) ),
+        onEditTodo: ( title, id ) => dispatch( editTodo( title, id ) ),
+        onRemoveTodo: id => dispatch( removeTodo( id ) )
     };
 }
 

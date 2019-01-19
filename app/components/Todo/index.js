@@ -1,11 +1,13 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
-import { StyleSheet, View, Text, Animated } from 'react-native';
+import { StyleSheet, View, Text, Animated, TextInput } from 'react-native';
 
 export default class Todo extends React.Component {
     state = {
+        title: '',
+        editable: false,
         expanded: true,
-        animation: new Animated.Value(27),
+        animation: new Animated.Value( 27 ),
         minWidth: 27,
         maxWidth: 75
     };
@@ -28,9 +30,13 @@ export default class Todo extends React.Component {
         ).start();
     };
 
+    componentWillMount() {
+        this.setState( { title: this.props.title } )
+    }
+
     render() {
-        const { completed, title, id, onToggleTodo } = this.props;
-        let { toggledValue } = this.state;
+        const { completed, id, onToggleTodo, onRemoveTodo, onEditTodo } = this.props;
+        let { toggledValue, editable } = this.state;
 
         return (
             <View style={ styles.todo }>
@@ -38,23 +44,41 @@ export default class Todo extends React.Component {
                       iconStyle={ styles.checkbox }
                       color={ completed ? 'lightgray' : '#757575' }
                       onPress={ () => onToggleTodo( id ) }/>
-                <Text style={ [ styles.title, completed ? styles.checked : '' ] }>
-                    { title }
-                </Text>
+                { editable
+                    ? <TextInput style={ [ styles.input ] }
+                                 onChangeText={ title => this.setState( { title } ) }
+                                 value={ this.state.title }/>
+                    : <Text style={ [ styles.title, completed ? styles.checked : '' ] }>
+                        { this.props.title }
+                    </Text> }
 
 
                 <Animated.View style={ [ styles.menu, { width: this.state.animation } ] }>
-                        <Icon name={ 'settings' }
-                              iconStyle={ [ styles.additional, { marginLeft: 0 } ] }
-                              color={ '#757575' }
-                              onPress={ this.toggleMenu }/>
-                        <Icon name={ 'edit' }
-                              color={ '#757575' }
-                              iconStyle={ styles.settings }/>
+                    { editable
+                        ? <Icon name={ 'save' }
+                                iconStyle={ [ styles.additional, { marginLeft: 0 } ] }
+                                color={ '#757575' }
+                                onPress={ () => {
+                                    onEditTodo( id, this.state.title );
+                                    this.setState( { editable: !this.state.editable } );
+                                } }/>
+                        : <Icon name={ 'settings' }
+                                iconStyle={ [ styles.additional, { marginLeft: 0 } ] }
+                                color={ '#757575' }
+                                onPress={ this.toggleMenu }/> }
 
-                        <Icon name={ 'delete' }
-                              color={ '#757575' }
-                              iconStyle={ styles.settings }/>
+                    <Icon name={ 'edit' }
+                          color={ '#757575' }
+                          iconStyle={ styles.settings }
+                          onPress={ () => {
+                              this.toggleMenu();
+                              this.setState( { editable: !this.state.editable } );
+                          } }/>
+
+                    <Icon name={ 'delete' }
+                          color={ '#757575' }
+                          iconStyle={ styles.settings }
+                          onPress={ () => onRemoveTodo( id ) }/>
                 </Animated.View>
 
 
@@ -73,7 +97,17 @@ const styles = StyleSheet.create( {
         borderBottomColor: 'rgba(0,0,0,.1)',
         padding: 10
     },
-    checkbox: {},
+    input: {
+        flex: 1,
+        height: 37,
+        maxWidth: '75%',
+        color: '#757575',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderWidth: 1,
+        borderColor: 'lightgray',
+        borderRadius: 2
+    },
     title: {
         flex: 1,
         color: 'rgb(117,117,117)',

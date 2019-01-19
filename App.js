@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StatusBar, StyleSheet } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import state from './store/state';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -11,7 +11,6 @@ import TodoListContainer from './app/containers/TodoListContainer';
 import FormTodoContainer from "./app/containers/FormTodoContainer";
 
 const store = createStore( reducer, state );
-
 
 export default class App extends React.Component {
     render() {

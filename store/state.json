@@ -3,12 +3,12 @@
         {
             "id": 1,
             "title": "Изучить JavaScript",
-            "completed": true
+            "completed": false
         },
         {
             "id": 2,
             "title": "Изучить React",
-            "completed": true
+            "completed": false
         },
         {
             "id": 3,

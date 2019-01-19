@@ -1,5 +1,7 @@
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const ADD_TODO = 'ADD_TODO';
+export const EDIT_TODO = 'EDIT_TODO';
+export const REMOVE_TODO = 'REMOVE_TODO';
 
 let tempId = 5;
 
@@ -15,5 +17,20 @@ export function addTodo(title) {
         type: ADD_TODO,
         id: tempId++,
         title
+    };
+}
+
+export function editTodo(id, title) {
+    return {
+        type: EDIT_TODO,
+        id,
+        title
+    };
+}
+
+export function removeTodo(id) {
+    return {
+        type: REMOVE_TODO,
+        id,
     };
 }
