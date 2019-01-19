@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
         bottom: 0,
         borderTopWidth: 1,
         borderTopColor: 'rgba(0,0,0,.1)',
-        minHeight: 60,
-        maxHeight: 60,
+        minHeight: 58,
+        maxHeight: 58,
         minWidth: '100%',
         maxWidth: '100%',
-        paddingLeft: 18,
-        paddingRight: 18,
+        paddingLeft: 8,
+        paddingRight: 8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -53,18 +53,22 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         maxWidth: '75%',
+        height: 37,
         color: '#757575',
-        paddingLeft: 7,
-        paddingRight: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderWidth: 1,
         borderColor: 'lightgray',
         borderRadius: 2
     },
     button: {
-        opacity: 1
+        opacity: 1,
+        width: '25%'
     },
     buttonText: {
         fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#757575'
     },
     disabled: {
         opacity: 0.5
