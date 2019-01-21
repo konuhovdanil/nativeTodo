@@ -3,8 +3,6 @@ export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
 
-let tempId = 5;
-
 export function toggleTodo(id) {
     return {
         type: TOGGLE_TODO,
@@ -15,7 +13,6 @@ export function toggleTodo(id) {
 export function addTodo(title) {
     return {
         type: ADD_TODO,
-        id: tempId++,
         title
     };
 }

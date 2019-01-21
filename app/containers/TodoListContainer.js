@@ -1,20 +1,22 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import TodoList from '../components/TodoList';
 
-function mapStateToProps( state ) {
+function mapStateToProps(state) {
     return {
         todos: state.todos.filter(todo => {
-            if (state.filter === 'COMPLETED') {
-                return todo.completed;
-            } else if (state.filter === 'UNCOMPLETED') {
-                return !todo.completed;
-            } else {
-                return todo;
+            switch (state.filter) {
+                case 'COMPLETED' :
+                    return todo.completed;
+                case 'UNCOMPLETED' :
+                    return !todo.completed;
+                default :
+                    return todo;
             }
         })
     };
 }
-const FilterContainer = connect( mapStateToProps )( TodoList );
+
+const FilterContainer = connect(mapStateToProps)(TodoList);
 
 export default FilterContainer;
